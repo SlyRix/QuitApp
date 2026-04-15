@@ -1,0 +1,48 @@
+{
+  "join": {
+    "title": "Spiel beitreten",
+    "pinLabel": "Spiel-PIN",
+    "pinPlaceholder": "6-stellige PIN eingeben",
+    "nicknameLabel": "Dein Spitzname",
+    "nicknamePlaceholder": "Wähle einen coolen Namen",
+    "joinButton": "Beitreten",
+    "joining": "Beitreten...",
+    "invalidPin": "Ungültige PIN — Spiel nicht gefunden",
+    "nicknameTaken": "Spitzname bereits vergeben, versuche einen anderen",
+    "gameStarted": "Dieses Spiel hat bereits begonnen",
+    "continueAs": "Weiter als {{nickname}}",
+    "newSession": "Neu starten"
+  },
+  "avatar": {
+    "title": "Wähle deinen Avatar",
+    "subtitle": "Wähle ein Aussehen bevor du beitrittst",
+    "ready": "Bereit!",
+    "randomize": "Zufällig",
+    "skin": "Haut",
+    "hair": "Haare",
+    "outfit": "Outfit",
+    "accessory": "Accessoire"
+  },
+  "game": {
+    "waiting": "Warte auf den Spielstart...",
+    "question": "Frage {{n}}",
+    "timeLeft": "{{s}}s",
+    "answered": "Antwort erhalten!",
+    "tooLate": "Zeit abgelaufen!",
+    "correct": "Richtig!",
+    "incorrect": "Falsche Antwort",
+    "points": "+{{n}} Pkte",
+    "yourScore": "Dein Punktestand",
+    "streak": "{{n}}x Serie",
+    "rank": "Platz #{{n}}",
+    "gameOver": "Spiel vorbei!",
+    "finalScore": "Endergebnis",
+    "podium": "Du hast {{ordinal}} Platz belegt!",
+    "waitingForHost": "Warte auf die nächste Frage...",
+    "leaderboard": "Rangliste"
+  },
+  "errors": {
+    "connectionLost": "Verbindung unterbrochen. Verbinde erneut...",
+    "networkError": "Netzwerkfehler. Bitte versuche es erneut."
+  }
+}

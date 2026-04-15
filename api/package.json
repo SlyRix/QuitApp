@@ -1,0 +1,23 @@
+{
+  "name": "kahootplus-api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:migrate": "wrangler d1 migrations apply kahootplus-db",
+    "db:migrate:local": "wrangler d1 migrations apply kahootplus-db --local",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.4.13",
+    "drizzle-orm": "^0.31.4",
+    "@kahootplus/shared": "*"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240725.0",
+    "drizzle-kit": "^0.22.8",
+    "typescript": "^5.5.3",
+    "wrangler": "^3.65.1"
+  }
+}

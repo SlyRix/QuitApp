@@ -1,0 +1,28 @@
+name = "kahootplus-api"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+account_id = "a3000146f2714841e3bdd91d655aef9c"
+
+[durable_objects]
+bindings = [{ name = "GAME_ROOM", class_name = "GameRoom" }]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["GameRoom"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "kahootplus-db"
+database_id = "257c1f00-5331-45eb-aa0e-8529819b708f"
+
+[[kv_namespaces]]
+binding = "SESSIONS"
+id = "f108aa4c259d4706917d2d7c22fa6180"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "kahootplus-media"
+
+[vars]
+CORS_ORIGIN_HOST = "https://quiz.rushelwedsivani.com"
+CORS_ORIGIN_PLAYER = "https://quiz-player.rushelwedsivani.com"

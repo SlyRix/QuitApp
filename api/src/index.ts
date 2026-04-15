@@ -1,0 +1,33 @@
+import { Hono } from "hono";
+import type { Env } from "./types";
+import { corsMiddleware } from "./middleware/cors";
+import authRouter from "./routes/auth";
+import quizzesRouter from "./routes/quizzes";
+import gamesRouter from "./routes/games";
+import uploadRouter from "./routes/upload";
+
+export { GameRoom } from "./game/GameRoom";
+
+const app = new Hono<{ Bindings: Env }>();
+
+// ─── Global middleware ────────────────────────────────────────────────────────
+app.use("*", corsMiddleware);
+
+// ─── Health check ─────────────────────────────────────────────────────────────
+app.get("/", (c) => c.json({ status: "ok", service: "kahootplus-api", version: "1.0.0" }));
+app.get("/health", (c) => c.json({ status: "ok", ts: Date.now() }));
+
+// ─── API routes ───────────────────────────────────────────────────────────────
+app.route("/api/auth", authRouter);
+app.route("/api/quizzes", quizzesRouter);
+app.route("/api/games", gamesRouter);
+app.route("/api/upload", uploadRouter);
+
+// ─── 404 fallback ─────────────────────────────────────────────────────────────
+app.notFound((c) => c.json({ success: false, error: "Not found" }, 404));
+app.onError((err, c) => {
+  console.error("Unhandled error:", err);
+  return c.json({ success: false, error: "Internal server error" }, 500);
+});
+
+export default app;

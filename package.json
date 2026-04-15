@@ -1,0 +1,24 @@
+{
+  "name": "kahootplus",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "api",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=api\" \"npm run dev --workspace=apps/host\" \"npm run dev --workspace=apps/player\"",
+    "dev:api": "npm run dev --workspace=api",
+    "dev:host": "npm run dev --workspace=apps/host",
+    "dev:player": "npm run dev --workspace=apps/player",
+    "build": "npm run build --workspace=packages/shared && npm run build --workspace=api && npm run build --workspace=apps/host && npm run build --workspace=apps/player",
+    "build:host": "npm run build --workspace=apps/host",
+    "build:player": "npm run build --workspace=apps/player",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

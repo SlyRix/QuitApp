@@ -1,0 +1,48 @@
+{
+  "join": {
+    "title": "Join Game",
+    "pinLabel": "Game PIN",
+    "pinPlaceholder": "Enter 6-digit PIN",
+    "nicknameLabel": "Your nickname",
+    "nicknamePlaceholder": "Pick a cool name",
+    "joinButton": "Join game",
+    "joining": "Joining...",
+    "invalidPin": "Invalid PIN — game not found",
+    "nicknameTaken": "Nickname already taken, try another",
+    "gameStarted": "This game has already started",
+    "continueAs": "Continue as {{nickname}}",
+    "newSession": "Start fresh"
+  },
+  "avatar": {
+    "title": "Choose your avatar",
+    "subtitle": "Pick a look before you join",
+    "ready": "Ready!",
+    "randomize": "Randomize",
+    "skin": "Skin",
+    "hair": "Hair",
+    "outfit": "Outfit",
+    "accessory": "Accessory"
+  },
+  "game": {
+    "waiting": "Waiting for game to start...",
+    "question": "Question {{n}}",
+    "timeLeft": "{{s}}s",
+    "answered": "Answer received!",
+    "tooLate": "Time's up!",
+    "correct": "Correct!",
+    "incorrect": "Wrong answer",
+    "points": "+{{n}} pts",
+    "yourScore": "Your score",
+    "streak": "{{n}}x streak",
+    "rank": "Rank #{{n}}",
+    "gameOver": "Game over!",
+    "finalScore": "Final score",
+    "podium": "You finished {{ordinal}}!",
+    "waitingForHost": "Waiting for next question...",
+    "leaderboard": "Leaderboard"
+  },
+  "errors": {
+    "connectionLost": "Connection lost. Reconnecting...",
+    "networkError": "Network error. Please try again."
+  }
+}
