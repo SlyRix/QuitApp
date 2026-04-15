@@ -299,7 +299,7 @@ export class GameRoom {
 
     const pair = new WebSocketPair();
     const [client, server] = Object.values(pair) as [WebSocket, WebSocket];
-    this.state.acceptWebSocket(server);
+    server.accept();
 
     const sessionToken = url.searchParams.get("sessionToken");
     const isHost = url.searchParams.get("isHost") === "true";

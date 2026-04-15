@@ -39,7 +39,26 @@ quizzesRouter.get("/", async (c) => {
     .where(eq(quizzes.ownerId, user.userId))
     .all();
 
-  return c.json({ success: true, data: userQuizzes });
+  if (userQuizzes.length === 0) {
+    return c.json({ success: true, data: [] });
+  }
+
+  // Fetch question counts for all quizzes in one query
+  const placeholders = userQuizzes.map(() => "?").join(",");
+  const countResult = await c.env.DB.prepare(
+    `SELECT quiz_id, COUNT(*) as count FROM questions WHERE quiz_id IN (${placeholders}) GROUP BY quiz_id`
+  )
+    .bind(...userQuizzes.map((q) => q.id))
+    .all<{ quiz_id: string; count: number }>();
+
+  const countMap = new Map(countResult.results.map((r) => [r.quiz_id, r.count]));
+
+  const data = userQuizzes.map((quiz) => ({
+    ...quiz,
+    questions: new Array(countMap.get(quiz.id) ?? 0).fill(null).map((_, i) => ({ id: String(i) })),
+  }));
+
+  return c.json({ success: true, data });
 });
 
 // ─── POST / — create quiz ─────────────────────────────────────────────────────
