@@ -1,6 +1,6 @@
 import { useAuthStore } from "../store/authStore";
 
-const API_BASE = import.meta.env.VITE_API_URL ?? "/api";
+const API_BASE = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : "/api";
 
 export function useApi() {
   const token = useAuthStore((s) => s.token);
