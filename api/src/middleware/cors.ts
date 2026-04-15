@@ -28,6 +28,10 @@ export const corsMiddleware: MiddlewareHandler<{ Bindings: Env }> = async (c, ne
 
   await next();
 
+  // Skip header modification on WebSocket upgrade responses (101) — the
+  // response is immutable and attempting to set headers throws an error.
+  if (c.res.status === 101) return;
+
   c.res.headers.set("Access-Control-Allow-Origin", responseOrigin);
   c.res.headers.set("Access-Control-Allow-Credentials", "true");
   c.res.headers.set("Vary", "Origin");
