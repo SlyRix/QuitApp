@@ -13,7 +13,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { GamePhase } from "@kahootplus/shared";
+import { GamePhase } from "@slyquiz/shared";
 import type {
   WsMessage,
   WsMsgPlayerJoined,
@@ -23,7 +23,7 @@ import type {
   WsMsgGameEnded,
   WsMsgSync,
   LeaderboardEntry,
-} from "@kahootplus/shared";
+} from "@slyquiz/shared";
 
 interface PlayerInfo {
   id: string;

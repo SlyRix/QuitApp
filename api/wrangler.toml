@@ -1,4 +1,4 @@
-name = "kahootplus-api"
+name = "slyquiz-api"
 main = "src/index.ts"
 compatibility_date = "2025-01-01"
 account_id = "a3000146f2714841e3bdd91d655aef9c"

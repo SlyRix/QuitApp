@@ -1,6 +1,6 @@
-# KahootPlus — Findings & Research
+# SlyQuiz — Findings & Research
 
-**Project:** KahootPlus
+**Project:** SlyQuiz
 **Last Updated:** 2026-04-15
 
 ---
@@ -161,12 +161,12 @@
 ### Existing Workers (do not touch)
 - `wedding-api`, `rs-wedding-chat-api`, `roulette-api`, `sivani-jahrestag2026`, `frosty-disk-3483`
 
-**→ Create new:** `kahootplus-api` (+ Durable Object: `GameRoom`)
+**→ Create new:** `slyquiz-api` (+ Durable Object: `GameRoom`)
 
 ### GitHub
 - Repo: `https://github.com/SlyRix/QuitApp.git`
 - Cloudflare Pages will auto-deploy on push to `main`
-- Two Pages projects: `kahootplus-host` + `kahootplus-player`
+- Two Pages projects: `slyquiz-host` + `slyquiz-player`
 
 ---
 
@@ -198,7 +198,7 @@ QR code encodes this URL — scanning it on any phone goes straight to the join 
 
 **Implementation options for player subdomain:**
 - Option A: Same Vite project, different `index.html` entry → deploy both to same Pages project, use `_redirects` to route by subdomain
-- Option B: Separate Pages project (`kahootplus-player`) — cleaner separation, independent deploys
+- Option B: Separate Pages project (`slyquiz-player`) — cleaner separation, independent deploys
 - **Recommendation: Option B** — player experience can be optimized independently, smaller JS bundle for mobile
 
 **wrangler.toml routes:**
@@ -514,7 +514,7 @@ Client uses this to instantly render the correct screen — player feels like th
 
 ### Question Type Mapping
 
-| Kahoot Type | KahootPlus Equivalent | Notes |
+| Kahoot Type | SlyQuiz Equivalent | Notes |
 |---|---|---|
 | `quiz` | Multiple Choice | Direct 1:1 map |
 | `true_false` | True/False | Direct 1:1 map |

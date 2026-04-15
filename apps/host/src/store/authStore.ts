@@ -33,7 +33,7 @@ export const useAuthStore = create<AuthState>()(
         })),
     }),
     {
-      name: "kahootplus-host-auth",
+      name: "slyquiz-host-auth",
       partialize: (state) => ({ user: state.user, token: state.token, isAuthenticated: state.isAuthenticated }),
     }
   )

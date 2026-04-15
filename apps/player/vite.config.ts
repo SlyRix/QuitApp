@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@kahootplus/shared": path.resolve(__dirname, "../../packages/shared/src/index.ts"),
+      "@slyquiz/shared": path.resolve(__dirname, "../../packages/shared/src/index.ts"),
     },
   },
   server: {

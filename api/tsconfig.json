@@ -11,7 +11,7 @@
     "skipLibCheck": true,
     "types": ["@cloudflare/workers-types"],
     "paths": {
-      "@kahootplus/shared": ["../packages/shared/src/index.ts"]
+      "@slyquiz/shared": ["../packages/shared/src/index.ts"]
     }
   },
   "include": ["src/**/*.ts"],

@@ -1,5 +1,5 @@
 {
-  "name": "kahootplus-api",
+  "name": "slyquiz-api",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -12,7 +12,7 @@
   "dependencies": {
     "hono": "^4.4.13",
     "drizzle-orm": "^0.31.4",
-    "@kahootplus/shared": "*"
+    "@slyquiz/shared": "*"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240725.0",

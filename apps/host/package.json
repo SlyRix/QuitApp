@@ -1,5 +1,5 @@
 {
-  "name": "@kahootplus/host",
+  "name": "@slyquiz/host",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -11,7 +11,7 @@
     "lint": "eslint src --ext ts,tsx"
   },
   "dependencies": {
-    "@kahootplus/shared": "*",
+    "@slyquiz/shared": "*",
     "@tanstack/react-query": "^5.51.1",
     "framer-motion": "^11.3.8",
     "i18next": "^23.12.2",

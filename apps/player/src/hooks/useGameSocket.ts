@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback, useState } from "react";
-import type { WsMessage } from "@kahootplus/shared";
+import type { WsMessage } from "@slyquiz/shared";
 
 const BACKOFF_DELAYS = [500, 1000, 2000, 4000, 8000, 15000];
 const MAX_ATTEMPTS = 10;

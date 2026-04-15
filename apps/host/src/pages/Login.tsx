@@ -59,7 +59,7 @@ export default function Login() {
         className="w-full max-w-md"
       >
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-accent mb-2">KahootPlus</h1>
+          <h1 className="text-3xl font-bold text-accent mb-2">SlyQuiz</h1>
           <p className="text-text-secondary">
             {mode === "login" ? t("auth.loginSubtitle") : t("auth.registerSubtitle")}
           </p>

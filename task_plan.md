@@ -1,6 +1,6 @@
-# KahootPlus — Task Plan
+# SlyQuiz — Task Plan
 
-**Project:** Full-featured Kahoot Clone (KahootPlus)
+**Project:** Full-featured Kahoot Clone (SlyQuiz)
 **Domains:**
 - Host/Creator app: `quiz.rushelwedsivani.com`
 - Player join app:  `quiz-player.rushelwedsivani.com`
@@ -46,18 +46,18 @@ Build a real-time multiplayer quiz platform that matches Kahoot feature-for-feat
 - [x] 1.4 Auth system for quiz creators only: email/password + OAuth (Google)
 - [x] 1.5 KV-based JWT session management (creators only)
 - [x] 1.6 Basic creator dashboard UI
-- [ ] 1.7 Host app domain: quiz.rushelwedsivani.com → Cloudflare Pages (creator/host UI)
-- [ ] 1.8 Player app domain: quiz-player.rushelwedsivani.com → separate Cloudflare Pages project (mobile-optimized)
-- [ ] 1.9 Workers API on api.quiz.rushelwedsivani.com (custom domain via Workers route)
+- [x] 1.7 Host app LIVE: https://slyquiz-host.pages.dev
+- [x] 1.8 Player app LIVE: https://slyquiz-player.pages.dev
+- [ ] 1.9 Custom domains: quiz/quiz-player/api.quiz.rushelwedsivani.com (next step)
 - [x] 1.10 QR code generation: encodes https://quiz-player.rushelwedsivani.com/join/{PIN}
-- [ ] 1.11 GitHub repo: https://github.com/SlyRix/QuitApp.git → connect to Cloudflare Pages CI/CD (needs GitHub auth)
+- [x] 1.11 GitHub repo pushed: https://github.com/SlyRix/QuitApp (CI/CD via dashboard when GitHub app connected)
 - [x] 1.12 i18n setup: react-i18next, EN + DE locale files from day one
 - [x] 1.13 Quiz visibility: private (default) and public toggle per quiz
 - [x] 1.14 Create D1 database: kahootplus-db (257c1f00-5331-45eb-aa0e-8529819b708f)
 - [x] 1.15 Create KV namespace: KAHOOTPLUS_SESSIONS (f108aa4c259d4706917d2d7c22fa6180)
 - [x] 1.16 Create R2 bucket: kahootplus-media
 - [x] 1.17 Apply D1 migration via MCP (all 8 tables + 10 indexes confirmed)
-- [x] 1.18 Deploy Worker: https://kahootplus-api.rushelsilvester.workers.dev
+- [x] 1.18 Deploy Worker: https://slyquiz-api.rushelsilvester.workers.dev
 - [x] 1.19 Add JWT_SECRET wrangler secret (random 64-char hex)
 
 ### Phase 2 — Quiz Creation Engine (Week 2)
@@ -73,7 +73,7 @@ Build a real-time multiplayer quiz platform that matches Kahoot feature-for-feat
 - [ ] 2.10 Media upload per question (image/audio/video → R2)
 - [ ] 2.11 Quiz settings: time limits, points, theme, music
 - [ ] 2.12 Question bank / search and reuse
-- [ ] 2.13 Kahoot quiz import: upload Kahoot JSON export → auto-convert to KahootPlus format
+- [ ] 2.13 Kahoot quiz import: upload Kahoot JSON export → auto-convert to SlyQuiz format
 - [ ] 2.14 Import validation: detect unsupported question types, show mapping preview before confirming
 - [ ] 2.15 Preserve imported media: download Kahoot-hosted images → re-upload to R2
 

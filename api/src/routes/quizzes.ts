@@ -4,7 +4,7 @@ import { eq, and } from "drizzle-orm";
 import { quizzes, questions, answerOptions } from "../db/schema";
 import { authMiddleware, getUser } from "../middleware/auth";
 import type { Env, SessionData } from "../types";
-import type { QuestionType } from "@kahootplus/shared";
+import type { QuestionType } from "@slyquiz/shared";
 
 type Variables = { user: SessionData };
 

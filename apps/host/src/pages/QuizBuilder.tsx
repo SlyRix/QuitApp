@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import { Plus, Trash2, Check, ChevronLeft, Save, GripVertical, Clock, Star } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useApi } from "../hooks/useApi";
-import { QuestionType } from "@kahootplus/shared";
-import type { Quiz, Question } from "@kahootplus/shared";
+import { QuestionType } from "@slyquiz/shared";
+import type { Quiz, Question } from "@slyquiz/shared";
 
 interface DraftAnswer {
   id: string;

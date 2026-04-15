@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import AvatarBuilder, { configToString } from "./AvatarBuilder";
 import type { AvatarConfig } from "./AvatarBuilder";
 
-const SESSION_KEY = "kahootplus_player_session";
+const SESSION_KEY = "slyquiz_player_session";
 
 interface StoredSession {
   playerId: string;
@@ -97,7 +97,7 @@ export default function JoinGame() {
         pin,
       };
       localStorage.setItem(SESSION_KEY, JSON.stringify(session));
-      localStorage.setItem("kahootplus_avatar", configToString(avatarConfig));
+      localStorage.setItem("slyquiz_avatar", configToString(avatarConfig));
 
       navigate("/game", { state: session });
     } catch {
@@ -121,7 +121,7 @@ export default function JoinGame() {
       <div className="flex-1 flex flex-col max-w-sm mx-auto w-full p-6">
         {/* Logo */}
         <div className="text-center pt-8 pb-6">
-          <h1 className="text-3xl font-bold text-accent">KahootPlus</h1>
+          <h1 className="text-3xl font-bold text-accent">SlyQuiz</h1>
         </div>
 
         {/* Existing session banner */}

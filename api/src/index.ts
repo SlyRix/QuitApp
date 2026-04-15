@@ -14,7 +14,7 @@ const app = new Hono<{ Bindings: Env }>();
 app.use("*", corsMiddleware);
 
 // ─── Health check ─────────────────────────────────────────────────────────────
-app.get("/", (c) => c.json({ status: "ok", service: "kahootplus-api", version: "1.0.0" }));
+app.get("/", (c) => c.json({ status: "ok", service: "slyquiz-api", version: "1.0.0" }));
 app.get("/health", (c) => c.json({ status: "ok", ts: Date.now() }));
 
 // ─── API routes ───────────────────────────────────────────────────────────────

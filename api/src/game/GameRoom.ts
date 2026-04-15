@@ -5,7 +5,7 @@ import type {
   GamePhase,
   LeaderboardEntry,
   QuestionType,
-} from "@kahootplus/shared";
+} from "@slyquiz/shared";
 
 interface PlayerState {
   id: string;

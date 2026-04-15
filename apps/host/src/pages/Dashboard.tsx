@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Plus, Play, Pencil, Trash2, Globe, Lock, LogOut } from "lucide-react";
 import { useAuthStore } from "../store/authStore";
 import { useApi } from "../hooks/useApi";
-import type { Quiz } from "@kahootplus/shared";
+import type { Quiz } from "@slyquiz/shared";
 
 export default function Dashboard() {
   const { t } = useTranslation();
@@ -40,7 +40,7 @@ export default function Dashboard() {
       {/* Header */}
       <header className="bg-surface border-b border-white/5 px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <h1 className="text-xl font-bold text-accent">KahootPlus</h1>
+          <h1 className="text-xl font-bold text-accent">SlyQuiz</h1>
           <div className="flex items-center gap-4">
             <span className="text-text-secondary text-sm">{user?.name}</span>
             <button onClick={handleLogout} className="btn-secondary flex items-center gap-2 text-sm py-1.5">

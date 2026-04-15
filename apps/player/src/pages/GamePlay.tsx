@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Wifi, WifiOff, Trophy, Zap } from "lucide-react";
 import { useGameSocket } from "../hooks/useGameSocket";
 import { AvatarSVG } from "./AvatarBuilder";
-import { GamePhase } from "@kahootplus/shared";
+import { GamePhase } from "@slyquiz/shared";
 import type {
   WsMessage,
   WsMsgSync,
@@ -13,7 +13,7 @@ import type {
   WsMsgQuestionEnd,
   WsMsgGameEnded,
   WsMsgAnswerAck,
-} from "@kahootplus/shared";
+} from "@slyquiz/shared";
 import type { AvatarConfig } from "./AvatarBuilder";
 
 interface SessionState {
@@ -50,7 +50,7 @@ export default function GamePlay() {
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
 
-  const avatarRaw = localStorage.getItem("kahootplus_avatar");
+  const avatarRaw = localStorage.getItem("slyquiz_avatar");
   let avatarConfig: AvatarConfig | null = null;
   try {
     if (avatarRaw) avatarConfig = JSON.parse(avatarRaw) as AvatarConfig;
@@ -190,7 +190,7 @@ export default function GamePlay() {
           </div>
 
           <button
-            onClick={() => { localStorage.removeItem("kahootplus_player_session"); navigate("/join"); }}
+            onClick={() => { localStorage.removeItem("slyquiz_player_session"); navigate("/join"); }}
             className="btn-primary"
           >
             Play again

@@ -1,4 +1,4 @@
-# KahootPlus — Session Progress Log
+# SlyQuiz — Session Progress Log
 
 ---
 
@@ -27,8 +27,8 @@
 
 ### Completed (continued)
 - [x] D1 migration applied via MCP — all 8 tables + 10 indexes live in kahootplus-db
-- [x] Created deploy API token `kahootplus-deploy` via CF API (Workers Scripts + KV + R2 + Routes write)
-- [x] Worker deployed: https://kahootplus-api.rushelsilvester.workers.dev
+- [x] Created deploy API token `slyquiz-deploy` via CF API (Workers Scripts + KV + R2 + Routes write)
+- [x] Worker deployed: https://slyquiz-api.rushelsilvester.workers.dev
 - [x] JWT_SECRET set as wrangler secret (random 64-char hex)
 - [x] Tokens saved to /home/rushel/Projects/Kahoot/.env + memory
 
@@ -63,8 +63,8 @@
 
 ### Next Session Should Start With
 - Phase 1: Scaffold the project
-  1. `npm create cloudflare@latest kahootplus` for Workers
-  2. `npm create vite@latest kahootplus-web` for frontend
+  1. `npm create cloudflare@latest slyquiz` for Workers
+  2. `npm create vite@latest slyquiz-web` for frontend
   3. Set up D1 database + run initial migrations
   4. Configure wrangler.toml with all bindings (D1, KV, R2, DO)
   5. Basic auth endpoints: register, login, me
