@@ -4,57 +4,105 @@
 
 @layer base {
   html {
-    background-color: #0D0F14;
-    color: #F1F5F9;
+    background-color: #07080f;
+    color: #e2e8f8;
   }
 
   body {
     min-height: 100vh;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: "DM Sans", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: #07080f;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 20% 10%, rgba(184, 255, 53, 0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(56, 217, 245, 0.03) 0%, transparent 60%);
   }
 
-  * {
-    box-sizing: border-box;
-  }
+  * { box-sizing: border-box; }
 
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #161B27;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #334155;
-    border-radius: 3px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #475569;
-  }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #0d1018; }
+  ::-webkit-scrollbar-thumb { background: #1a2230; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #253040; }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-accent text-background font-semibold px-4 py-2 rounded-lg hover:bg-accent-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center gap-2
+           bg-accent text-background font-display font-bold
+           px-5 py-2.5 rounded-xl
+           hover:bg-accent-hover active:scale-95
+           transition-all duration-150
+           disabled:opacity-40 disabled:cursor-not-allowed disabled:scale-100;
+    box-shadow: 0 0 20px rgba(184, 255, 53, 0.2);
   }
 
   .btn-secondary {
-    @apply bg-surface-2 text-text-primary font-semibold px-4 py-2 rounded-lg hover:bg-surface border border-white/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center gap-2
+           bg-surface-2 text-text-primary font-semibold
+           px-5 py-2.5 rounded-xl border border-white/8
+           hover:bg-surface-3 hover:border-white/15 active:scale-95
+           transition-all duration-150
+           disabled:opacity-40 disabled:cursor-not-allowed;
   }
 
   .btn-danger {
-    @apply bg-error/20 text-error font-semibold px-4 py-2 rounded-lg hover:bg-error/30 border border-error/30 transition-colors;
+    @apply inline-flex items-center justify-center gap-2
+           text-coral font-semibold
+           px-5 py-2.5 rounded-xl border border-coral/25
+           hover:bg-coral/10 active:scale-95
+           transition-all duration-150;
   }
 
   .input-field {
-    @apply bg-surface border border-white/10 rounded-lg px-3 py-2 text-text-primary placeholder-text-muted focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/30 transition-colors w-full;
+    @apply w-full bg-surface-2 border border-white/8 rounded-xl
+           px-4 py-2.5 text-text-primary placeholder-text-muted
+           font-sans text-sm
+           focus:outline-none focus:border-accent/40 focus:ring-2 focus:ring-accent/15
+           transition-all duration-200;
   }
 
   .card {
-    @apply bg-surface border border-white/5 rounded-xl p-4;
+    @apply bg-surface-2 border border-white/6 rounded-2xl p-4;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
   }
+
+  .card-interactive {
+    @apply card cursor-pointer
+           hover:border-accent/20 hover:bg-surface-3
+           transition-all duration-200;
+  }
+
+  .badge-accent {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5
+           rounded-full text-xs font-semibold
+           bg-accent/15 text-accent;
+  }
+
+  .badge-coral {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5
+           rounded-full text-xs font-semibold
+           bg-coral/15 text-coral;
+  }
+
+  .badge-sky {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5
+           rounded-full text-xs font-semibold
+           bg-sky/15 text-sky;
+  }
+
+  .text-glow {
+    color: #b8ff35;
+    text-shadow: 0 0 28px rgba(184, 255, 53, 0.45);
+  }
+
+  .divider {
+    @apply border-t border-white/6;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
 }

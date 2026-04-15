@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
-import { Shuffle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Shuffle, Check } from "lucide-react";
 
 export interface AvatarConfig {
   body: number;
@@ -12,28 +11,25 @@ export interface AvatarConfig {
   color: string;
 }
 
-const BODY_COUNT = 3;
-const SKIN_COLORS = ["#FDDBB4", "#F1C27D", "#C68642", "#8D5524", "#4A2C17"];
+const SKIN_COLORS = ["#fddbb4", "#f1c27d", "#c68642", "#8d5524", "#4a2c17"];
 const HAIR_COUNT = 5;
 const OUTFIT_COUNT = 4;
 const ACCESSORY_COUNT = 4;
 const BG_COLORS = [
-  "#6EE7F7", "#F87171", "#FBBF24", "#4ADE80",
-  "#A78BFA", "#F472B6", "#60A5FA", "#34D399",
+  "#b8ff35", "#38d9f5", "#ff4d6d", "#ffd426",
+  "#00d483", "#a78bfa", "#f472b6", "#fb923c",
 ];
 
-function randomInt(max: number) {
-  return Math.floor(Math.random() * max);
-}
+function randomInt(max: number) { return Math.floor(Math.random() * max); }
 
 function randomConfig(): AvatarConfig {
   return {
-    body: randomInt(BODY_COUNT),
+    body: randomInt(3),
     skin: randomInt(SKIN_COLORS.length),
     hair: randomInt(HAIR_COUNT),
     outfit: randomInt(OUTFIT_COUNT),
     accessory: randomInt(ACCESSORY_COUNT),
-    color: BG_COLORS[randomInt(BG_COLORS.length)] ?? "#6EE7F7",
+    color: BG_COLORS[randomInt(BG_COLORS.length)] ?? "#b8ff35",
   };
 }
 
@@ -43,213 +39,237 @@ export function configToString(config: AvatarConfig): string {
 
 export function AvatarSVG({ config, size = 80 }: { config: AvatarConfig; size?: number }) {
   const skinColor = SKIN_COLORS[config.skin] ?? SKIN_COLORS[0]!;
-  const hairColors = ["#2C1810", "#8B4513", "#DAA520", "#FF6347", "#708090"];
+  const hairColors = ["#1a0a00", "#6b3a2a", "#d4a017", "#e03030", "#607080"];
   const hairColor = hairColors[config.hair] ?? hairColors[0]!;
-  const outfitColors = ["#3B82F6", "#EF4444", "#22C55E", "#8B5CF6"];
+  const outfitColors = ["#3d7fff", "#f23f5d", "#00d483", "#9f7aea"];
   const outfitColor = outfitColors[config.outfit] ?? outfitColors[0]!;
 
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 100 100"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {/* Background circle */}
+    <svg width={size} height={size} viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <circle cx="50" cy="50" r="50" fill={config.color} />
       {/* Body */}
-      <rect x="25" y="60" width="50" height="35" rx="10" fill={outfitColor} />
+      <rect x="22" y="62" width="56" height="34" rx="12" fill={outfitColor} />
       {/* Neck */}
-      <rect x="42" y="52" width="16" height="12" rx="4" fill={skinColor} />
+      <rect x="42" y="54" width="16" height="12" rx="5" fill={skinColor} />
       {/* Head */}
-      <ellipse cx="50" cy="42" rx="22" ry="22" fill={skinColor} />
-      {/* Hair styles */}
-      {config.hair === 0 && (
-        <ellipse cx="50" cy="22" rx="22" ry="10" fill={hairColor} />
-      )}
-      {config.hair === 1 && (
-        <>
-          <ellipse cx="50" cy="22" rx="22" ry="10" fill={hairColor} />
-          <rect x="28" y="18" width="6" height="16" rx="3" fill={hairColor} />
-          <rect x="66" y="18" width="6" height="16" rx="3" fill={hairColor} />
-        </>
-      )}
-      {config.hair === 2 && (
-        <ellipse cx="50" cy="20" rx="22" ry="12" fill={hairColor} />
-      )}
-      {config.hair === 3 && (
-        <>
-          <ellipse cx="50" cy="20" rx="22" ry="12" fill={hairColor} />
-          <rect x="37" y="14" width="26" height="8" rx="4" fill={hairColor} />
-        </>
-      )}
-      {config.hair === 4 && (
-        <rect x="29" y="14" width="42" height="12" rx="6" fill={hairColor} />
-      )}
+      <ellipse cx="50" cy="43" rx="23" ry="23" fill={skinColor} />
+      {/* Hair */}
+      {config.hair === 0 && <ellipse cx="50" cy="22" rx="23" ry="11" fill={hairColor} />}
+      {config.hair === 1 && <>
+        <ellipse cx="50" cy="22" rx="23" ry="11" fill={hairColor} />
+        <rect x="27" y="18" width="7" height="18" rx="3.5" fill={hairColor} />
+        <rect x="66" y="18" width="7" height="18" rx="3.5" fill={hairColor} />
+      </>}
+      {config.hair === 2 && <path d="M 27 30 Q 28 14 50 14 Q 72 14 73 30 Q 70 18 50 19 Q 30 18 27 30Z" fill={hairColor} />}
+      {config.hair === 3 && <>
+        <ellipse cx="50" cy="20" rx="23" ry="12" fill={hairColor} />
+        <rect x="36" y="13" width="28" height="9" rx="4.5" fill={hairColor} />
+      </>}
+      {config.hair === 4 && <rect x="28" y="13" width="44" height="13" rx="6.5" fill={hairColor} />}
       {/* Eyes */}
-      <circle cx="41" cy="42" r="4" fill="white" />
-      <circle cx="59" cy="42" r="4" fill="white" />
-      <circle cx="42" cy="43" r="2" fill="#1a1a2e" />
-      <circle cx="60" cy="43" r="2" fill="#1a1a2e" />
-      {/* Mouth */}
-      <path d="M 42 54 Q 50 60 58 54" stroke="#8B4513" strokeWidth="2" fill="none" strokeLinecap="round" />
+      <ellipse cx="40" cy="44" rx="5" ry="5" fill="white" />
+      <ellipse cx="60" cy="44" rx="5" ry="5" fill="white" />
+      <circle cx="41" cy="45" r="2.5" fill="#0a0a1a" />
+      <circle cx="61" cy="45" r="2.5" fill="#0a0a1a" />
+      <circle cx="42" cy="44" r="1" fill="white" />
+      <circle cx="62" cy="44" r="1" fill="white" />
+      {/* Smile */}
+      <path d="M 40 57 Q 50 64 60 57" stroke={skinColor === "#fddbb4" ? "#c47a50" : "#a0522d"} strokeWidth="2.5" fill="none" strokeLinecap="round" />
       {/* Accessories */}
       {config.accessory === 1 && (
-        <rect x="29" y="38" width="42" height="8" rx="4" fill="#1a1a2e" fillOpacity="0.7" />
+        <rect x="28" y="41" width="44" height="7" rx="3.5" fill="rgba(10,10,30,0.75)" />
       )}
       {config.accessory === 2 && (
-        <ellipse cx="50" cy="20" rx="22" ry="6" fill="#F59E0B" />
+        <ellipse cx="50" cy="19" rx="24" ry="7" fill="#ffd426" />
       )}
-      {config.accessory === 3 && (
-        <>
-          <circle cx="41" cy="42" r="6" fill="none" stroke="#6EE7F7" strokeWidth="2" />
-          <circle cx="59" cy="42" r="6" fill="none" stroke="#6EE7F7" strokeWidth="2" />
-          <line x1="47" y1="42" x2="53" y2="42" stroke="#6EE7F7" strokeWidth="2" />
-        </>
-      )}
+      {config.accessory === 3 && <>
+        <circle cx="40" cy="44" r="7" fill="none" stroke="#38d9f5" strokeWidth="2" />
+        <circle cx="60" cy="44" r="7" fill="none" stroke="#38d9f5" strokeWidth="2" />
+        <line x1="47" y1="44" x2="53" y2="44" stroke="#38d9f5" strokeWidth="2" />
+      </>}
     </svg>
   );
 }
 
 interface AvatarBuilderProps {
   onConfirm: (config: AvatarConfig) => void;
+  nickname?: string;
 }
 
-export default function AvatarBuilder({ onConfirm }: AvatarBuilderProps) {
-  const { t } = useTranslation();
+type Panel = "color" | "skin" | "hair" | "outfit" | "extra";
+
+export default function AvatarBuilder({ onConfirm, nickname }: AvatarBuilderProps) {
   const [config, setConfig] = useState<AvatarConfig>(randomConfig);
+  const [activePanel, setActivePanel] = useState<Panel>("color");
 
   function update(key: keyof AvatarConfig, value: number | string) {
     setConfig((prev) => ({ ...prev, [key]: value }));
   }
 
+  const panels: { key: Panel; label: string; emoji: string }[] = [
+    { key: "color", label: "BG", emoji: "🎨" },
+    { key: "skin",  label: "Skin", emoji: "✋" },
+    { key: "hair",  label: "Hair", emoji: "💇" },
+    { key: "outfit", label: "Fit", emoji: "👕" },
+    { key: "extra", label: "Extra", emoji: "✨" },
+  ];
+
   return (
-    <div className="flex flex-col h-full p-6 gap-6">
-      <div className="text-center">
-        <h2 className="text-2xl font-bold text-text-primary">{t("avatar.title")}</h2>
-        <p className="text-text-secondary text-sm mt-1">{t("avatar.subtitle")}</p>
+    <div className="flex flex-col h-full">
+      {/* Header */}
+      <div className="px-6 pt-4 pb-2 text-center">
+        <h2 className="font-display font-bold text-xl text-text-primary">Build your avatar</h2>
+        {nickname && <p className="text-text-secondary text-sm mt-0.5">{nickname}</p>}
       </div>
 
       {/* Avatar preview */}
-      <div className="flex justify-center">
-        <motion.div
-          key={JSON.stringify(config)}
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        >
-          <AvatarSVG config={config} size={140} />
-        </motion.div>
+      <div className="flex justify-center items-center py-4 relative">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="w-40 h-40 rounded-full" style={{ background: "radial-gradient(circle, rgba(184,255,53,0.12) 0%, transparent 70%)" }} />
+        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${config.skin}-${config.hair}-${config.outfit}-${config.color}-${config.accessory}`}
+            initial={{ scale: 0.85, opacity: 0, rotate: -5 }}
+            animate={{ scale: 1, opacity: 1, rotate: 0 }}
+            transition={{ type: "spring", stiffness: 350, damping: 22 }}
+          >
+            <AvatarSVG config={config} size={130} />
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      {/* Customization options */}
-      <div className="space-y-4 flex-1">
-        {/* Background color */}
-        <div>
-          <label className="text-sm text-text-secondary mb-2 block">Background</label>
-          <div className="flex gap-2 flex-wrap">
-            {BG_COLORS.map((color) => (
-              <button
-                key={color}
-                onClick={() => update("color", color)}
-                className={`w-8 h-8 rounded-full border-2 transition-all ${
-                  config.color === color ? "border-white scale-110" : "border-transparent"
-                }`}
-                style={{ backgroundColor: color }}
-              />
-            ))}
-          </div>
-        </div>
+      {/* Panel tabs */}
+      <div className="flex gap-1 px-4 pb-3 overflow-x-auto no-scrollbar">
+        {panels.map((p) => (
+          <button
+            key={p.key}
+            onClick={() => setActivePanel(p.key)}
+            className={`flex-1 min-w-[60px] py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap ${
+              activePanel === p.key
+                ? "bg-accent text-background"
+                : "bg-surface-2 text-text-secondary hover:text-text-primary"
+            }`}
+          >
+            {p.emoji} {p.label}
+          </button>
+        ))}
+      </div>
 
-        {/* Skin */}
-        <div>
-          <label className="text-sm text-text-secondary mb-2 block">{t("avatar.skin")}</label>
-          <div className="flex gap-2">
-            {SKIN_COLORS.map((color, i) => (
-              <button
-                key={i}
-                onClick={() => update("skin", i)}
-                className={`w-8 h-8 rounded-full border-2 transition-all ${
-                  config.skin === i ? "border-white scale-110" : "border-transparent"
-                }`}
-                style={{ backgroundColor: color }}
-              />
-            ))}
-          </div>
-        </div>
+      {/* Panel content */}
+      <div className="flex-1 px-4 overflow-y-auto">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activePanel}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.18 }}
+            className="pb-2"
+          >
+            {activePanel === "color" && (
+              <div className="grid grid-cols-4 gap-3">
+                {BG_COLORS.map((color) => (
+                  <button
+                    key={color}
+                    onClick={() => update("color", color)}
+                    className="aspect-square rounded-2xl relative border-2 transition-all active:scale-90"
+                    style={{ background: color, borderColor: config.color === color ? "white" : "transparent" }}
+                  >
+                    {config.color === color && (
+                      <Check size={16} className="absolute inset-0 m-auto text-black" strokeWidth={3} />
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
 
-        {/* Hair */}
-        <div>
-          <label className="text-sm text-text-secondary mb-2 block">{t("avatar.hair")}</label>
-          <div className="flex gap-2">
-            {Array.from({ length: HAIR_COUNT }, (_, i) => (
-              <button
-                key={i}
-                onClick={() => update("hair", i)}
-                className={`w-10 h-10 rounded-xl text-xs font-bold transition-all ${
-                  config.hair === i
-                    ? "bg-accent text-background"
-                    : "bg-surface-2 text-text-secondary hover:bg-surface"
-                }`}
-              >
-                {i + 1}
-              </button>
-            ))}
-          </div>
-        </div>
+            {activePanel === "skin" && (
+              <div className="flex gap-3 justify-center">
+                {SKIN_COLORS.map((color, i) => (
+                  <button
+                    key={i}
+                    onClick={() => update("skin", i)}
+                    className="w-12 h-12 rounded-2xl border-2 transition-all active:scale-90 relative"
+                    style={{ background: color, borderColor: config.skin === i ? "white" : "transparent" }}
+                  >
+                    {config.skin === i && (
+                      <Check size={14} className="absolute inset-0 m-auto" style={{ color: i < 2 ? "#333" : "white" }} strokeWidth={3} />
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
 
-        {/* Outfit */}
-        <div>
-          <label className="text-sm text-text-secondary mb-2 block">{t("avatar.outfit")}</label>
-          <div className="flex gap-2">
-            {["#3B82F6", "#EF4444", "#22C55E", "#8B5CF6"].map((color, i) => (
-              <button
-                key={i}
-                onClick={() => update("outfit", i)}
-                className={`w-8 h-8 rounded-full border-2 transition-all ${
-                  config.outfit === i ? "border-white scale-110" : "border-transparent"
-                }`}
-                style={{ backgroundColor: color }}
-              />
-            ))}
-          </div>
-        </div>
+            {activePanel === "hair" && (
+              <div className="grid grid-cols-5 gap-2">
+                {Array.from({ length: HAIR_COUNT }, (_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => update("hair", i)}
+                    className={`py-3 rounded-2xl text-sm font-bold transition-all active:scale-90 ${
+                      config.hair === i ? "bg-accent text-background" : "bg-surface-2 text-text-secondary"
+                    }`}
+                  >
+                    {["Short", "Curly", "Wavy", "Mohawk", "Flat"][i]}
+                  </button>
+                ))}
+              </div>
+            )}
 
-        {/* Accessory */}
-        <div>
-          <label className="text-sm text-text-secondary mb-2 block">{t("avatar.accessory")}</label>
-          <div className="flex gap-2">
-            {["None", "Shades", "Hat", "Glasses"].map((name, i) => (
-              <button
-                key={i}
-                onClick={() => update("accessory", i)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                  config.accessory === i
-                    ? "bg-accent text-background"
-                    : "bg-surface-2 text-text-secondary"
-                }`}
-              >
-                {name}
-              </button>
-            ))}
-          </div>
-        </div>
+            {activePanel === "outfit" && (
+              <div className="grid grid-cols-4 gap-3">
+                {["#3d7fff", "#f23f5d", "#00d483", "#9f7aea"].map((color, i) => (
+                  <button
+                    key={i}
+                    onClick={() => update("outfit", i)}
+                    className="aspect-square rounded-2xl border-2 relative transition-all active:scale-90"
+                    style={{ background: color, borderColor: config.outfit === i ? "white" : "transparent" }}
+                  >
+                    {config.outfit === i && <Check size={16} className="absolute inset-0 m-auto text-white" strokeWidth={3} />}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {activePanel === "extra" && (
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { label: "None", emoji: "😊" },
+                  { label: "Shades", emoji: "😎" },
+                  { label: "Crown", emoji: "👑" },
+                  { label: "Glasses", emoji: "🤓" },
+                ].map((item, i) => (
+                  <button
+                    key={i}
+                    onClick={() => update("accessory", i)}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-2xl border-2 transition-all text-sm font-semibold active:scale-95 ${
+                      config.accessory === i
+                        ? "border-accent bg-accent/10 text-accent"
+                        : "border-white/8 bg-surface-2 text-text-secondary"
+                    }`}
+                  >
+                    <span className="text-2xl">{item.emoji}</span>
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* Actions */}
-      <div className="flex gap-3">
+      <div className="flex gap-3 px-4 pb-6 pt-3">
         <button
           onClick={() => setConfig(randomConfig())}
-          className="flex items-center gap-2 bg-surface-2 text-text-secondary px-4 py-3 rounded-2xl font-semibold"
+          className="flex items-center gap-2 bg-surface-2 text-text-secondary px-4 py-4 rounded-2xl font-semibold text-sm hover:bg-surface-3 transition-colors active:scale-95"
         >
-          <Shuffle size={18} />
-          {t("avatar.randomize")}
+          <Shuffle size={16} />
+          Random
         </button>
-        <button
-          onClick={() => onConfirm(config)}
-          className="btn-primary"
-        >
-          {t("avatar.ready")}
+        <button onClick={() => onConfirm(config)} className="btn-primary flex-1">
+          I'm ready! →
         </button>
       </div>
     </div>
