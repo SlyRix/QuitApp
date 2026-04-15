@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,6 +13,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { GamePhase } from "@kahootplus/shared";
 import type {
   WsMessage,
   WsMsgPlayerJoined,
@@ -22,7 +23,6 @@ import type {
   WsMsgGameEnded,
   WsMsgSync,
   LeaderboardEntry,
-  GamePhase,
 } from "@kahootplus/shared";
 
 interface PlayerInfo {
@@ -40,7 +40,7 @@ export default function HostGame() {
   const token = useAuthStore((s) => s.token);
 
   const wsRef = useRef<WebSocket | null>(null);
-  const [phase, setPhase] = useState<GamePhase>("lobby");
+  const [phase, setPhase] = useState<GamePhase>(GamePhase.LOBBY);
   const [players, setPlayers] = useState<PlayerInfo[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<WsMsgQuestionStart | null>(null);
   const [questionResult, setQuestionResult] = useState<WsMsgQuestionEnd | null>(null);
@@ -97,7 +97,7 @@ export default function HostGame() {
         setCurrentQuestion(m);
         setQuestionResult(null);
         setAnswerCounts({});
-        setPhase("question");
+        setPhase(GamePhase.QUESTION);
         setTimeRemaining(m.question.timeLimit);
 
         if (timerRef.current) clearInterval(timerRef.current);
@@ -127,7 +127,7 @@ export default function HostGame() {
         setQuestionResult(m);
         setLeaderboard(m.leaderboard);
         setAnswerCounts(m.answerCounts);
-        setPhase("results");
+        setPhase(GamePhase.RESULTS);
         if (timerRef.current) clearInterval(timerRef.current);
         break;
       }
@@ -135,7 +135,7 @@ export default function HostGame() {
         const m = msg as WsMsgGameEnded;
         setFinalResult(m);
         setLeaderboard(m.finalLeaderboard);
-        setPhase("ended");
+        setPhase(GamePhase.ENDED);
         break;
       }
       case "SYNC": {
@@ -172,7 +172,7 @@ export default function HostGame() {
       }))
     : [];
 
-  if (phase === "ended" && finalResult) {
+  if (phase === GamePhase.ENDED && finalResult) {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6">
         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-2xl">
@@ -228,7 +228,7 @@ export default function HostGame() {
         {/* Main content */}
         <main className="flex-1 p-6 overflow-y-auto">
           <AnimatePresence mode="wait">
-            {phase === "lobby" && (
+            {phase === GamePhase.LOBBY && (
               <motion.div
                 key="lobby"
                 initial={{ opacity: 0 }}
@@ -272,7 +272,7 @@ export default function HostGame() {
               </motion.div>
             )}
 
-            {phase === "question" && currentQuestion && (
+            {phase === GamePhase.QUESTION && currentQuestion && (
               <motion.div
                 key={`question-${currentQuestion.questionIndex}`}
                 initial={{ opacity: 0, y: 20 }}
@@ -335,7 +335,7 @@ export default function HostGame() {
               </motion.div>
             )}
 
-            {phase === "results" && questionResult && (
+            {phase === GamePhase.RESULTS && questionResult && (
               <motion.div
                 key="results"
                 initial={{ opacity: 0 }}

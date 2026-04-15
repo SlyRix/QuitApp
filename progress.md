@@ -4,7 +4,47 @@
 
 ## Session 1 — 2026-04-15
 
-### What Was Done
+---
+
+## Session 2 — 2026-04-15 (Phase 1 Build)
+
+### Completed
+- [x] Created Cloudflare D1: `kahootplus-db` (ID: 257c1f00-5331-45eb-aa0e-8529819b708f)
+- [x] Created Cloudflare KV: `KAHOOTPLUS_SESSIONS` (ID: f108aa4c259d4706917d2d7c22fa6180)
+- [x] Created Cloudflare R2: `kahootplus-media`
+- [x] Scaffolded full monorepo (62 files across api/, apps/host/, apps/player/, packages/shared/)
+- [x] wrangler.toml with all correct CF resource IDs
+- [x] D1 schema + migration SQL (8 tables, 10 indexes)
+- [x] Hono.js API: auth routes, quiz CRUD, game sessions, upload, WebSocket upgrade
+- [x] GameRoom Durable Object: full lobby/question/results/ended state machine, reconnect + 60s grace
+- [x] Host React app: dashboard, quiz builder, host game view, QR code component
+- [x] Player React app: join screen, avatar builder, gameplay screen
+- [x] WebSocket reconnect hook: exponential backoff, session token persistence
+- [x] i18n: EN + DE locale files in both apps
+- [x] Dark theme: #0D0F14 / #161B27 / #6EE7F7
+- [x] npm install complete (all workspaces)
+- [x] git init + initial commit (bc2ea93)
+
+### Completed (continued)
+- [x] D1 migration applied via MCP — all 8 tables + 10 indexes live in kahootplus-db
+- [x] Created deploy API token `kahootplus-deploy` via CF API (Workers Scripts + KV + R2 + Routes write)
+- [x] Worker deployed: https://kahootplus-api.rushelsilvester.workers.dev
+- [x] JWT_SECRET set as wrangler secret (random 64-char hex)
+- [x] Tokens saved to /home/rushel/Projects/Kahoot/.env + memory
+
+### Still Blocked — Needs User Action
+- [ ] GitHub push: need GitHub Personal Access Token
+  - Create at: github.com → Settings → Developer Settings → Personal access tokens → repo scope
+  - Run: `! git -C ~/Projects/Kahoot remote set-url origin https://SlyRix:TOKEN@github.com/SlyRix/QuitApp.git && git -C ~/Projects/Kahoot push -u origin main`
+
+### Next Steps
+- Connect Pages to GitHub (via CF API or dashboard) for CI/CD
+- Add custom domains: quiz.rushelwedsivani.com + quiz-player.rushelwedsivani.com
+- Build Phase 2: Quiz creation engine
+
+---
+
+### Session 1 — What Was Done
 - Created project structure and 3 planning files
 - Audited all Kahoot features to match (P0/P1/P2 prioritized)
 - Identified 10 features that surpass Kahoot

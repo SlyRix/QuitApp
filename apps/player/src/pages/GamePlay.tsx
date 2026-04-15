@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Wifi, WifiOff, Trophy, Zap } from "lucide-react";
 import { useGameSocket } from "../hooks/useGameSocket";
 import { AvatarSVG } from "./AvatarBuilder";
+import { GamePhase } from "@kahootplus/shared";
 import type {
   WsMessage,
   WsMsgSync,
@@ -12,8 +13,6 @@ import type {
   WsMsgQuestionEnd,
   WsMsgGameEnded,
   WsMsgAnswerAck,
-  GamePhase,
-  LeaderboardEntry,
 } from "@kahootplus/shared";
 import type { AvatarConfig } from "./AvatarBuilder";
 
@@ -39,7 +38,7 @@ export default function GamePlay() {
 
   const session = location.state as SessionState | null;
 
-  const [phase, setPhase] = useState<GamePhase>("lobby");
+  const [phase, setPhase] = useState<GamePhase>(GamePhase.LOBBY);
   const [currentQuestion, setCurrentQuestion] = useState<WsMsgQuestionStart | null>(null);
   const [questionResult, setQuestionResult] = useState<WsMsgQuestionEnd | null>(null);
   const [gameEnded, setGameEnded] = useState<WsMsgGameEnded | null>(null);
@@ -49,7 +48,6 @@ export default function GamePlay() {
   const [hasAnswered, setHasAnswered] = useState(false);
   const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null);
   const [timeRemaining, setTimeRemaining] = useState(0);
-  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
 
   const avatarRaw = localStorage.getItem("kahootplus_avatar");
@@ -73,10 +71,9 @@ export default function GamePlay() {
         setMyScore(m.myScore);
         setMyStreak(m.myStreak);
         setHasAnswered(m.hasAnswered);
-        setLeaderboard(m.leaderboard);
         const myEntry = m.leaderboard.find((e) => e.playerId === session?.playerId);
         if (myEntry) setMyRank(myEntry.rank);
-        if (m.phase === "question" && m.currentQuestion) {
+        if (m.phase === GamePhase.QUESTION && m.currentQuestion) {
           setCurrentQuestion({
             type: "QUESTION_START",
             questionIndex: m.currentQuestionIndex,
@@ -91,7 +88,7 @@ export default function GamePlay() {
       case "QUESTION_START": {
         const m = msg as WsMsgQuestionStart;
         setCurrentQuestion(m);
-        setPhase("question");
+        setPhase(GamePhase.QUESTION);
         setHasAnswered(false);
         setSelectedAnswerId(null);
         setQuestionResult(null);
@@ -116,10 +113,9 @@ export default function GamePlay() {
       case "QUESTION_END": {
         const m = msg as WsMsgQuestionEnd;
         setQuestionResult(m);
-        setPhase("results");
+        setPhase(GamePhase.RESULTS);
         setMyScore(m.myScore);
         setMyStreak(m.myStreak);
-        setLeaderboard(m.leaderboard);
         const myEntry = m.leaderboard.find((e) => e.playerId === session?.playerId);
         if (myEntry) setMyRank(myEntry.rank);
         break;
@@ -127,8 +123,7 @@ export default function GamePlay() {
       case "GAME_ENDED": {
         const m = msg as WsMsgGameEnded;
         setGameEnded(m);
-        setPhase("ended");
-        setLeaderboard(m.finalLeaderboard);
+        setPhase(GamePhase.ENDED);
         const myEntry = m.finalLeaderboard.find((e) => e.playerId === session?.playerId);
         if (myEntry) setMyRank(myEntry.rank);
         break;
@@ -154,7 +149,7 @@ export default function GamePlay() {
   if (!session) return null;
 
   // Game ended screen
-  if (phase === "ended" && gameEnded) {
+  if (phase === GamePhase.ENDED && gameEnded) {
     const myFinalEntry = gameEnded.finalLeaderboard.find((e) => e.playerId === session.playerId);
     const rank = myFinalEntry?.rank ?? 0;
     const podiumEmoji = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : `#${rank}`;
@@ -236,7 +231,7 @@ export default function GamePlay() {
       <div className="flex-1 flex flex-col p-4">
         <AnimatePresence mode="wait">
           {/* Lobby / waiting */}
-          {phase === "lobby" && (
+          {phase === GamePhase.LOBBY && (
             <motion.div
               key="waiting"
               initial={{ opacity: 0 }}
@@ -262,7 +257,7 @@ export default function GamePlay() {
           )}
 
           {/* Active question */}
-          {phase === "question" && currentQuestion && (
+          {phase === GamePhase.QUESTION && currentQuestion && (
             <motion.div
               key={`q-${currentQuestion.questionIndex}`}
               initial={{ opacity: 0, y: 20 }}
@@ -329,7 +324,7 @@ export default function GamePlay() {
           )}
 
           {/* Question results */}
-          {phase === "results" && questionResult && (
+          {phase === GamePhase.RESULTS && questionResult && (
             <motion.div
               key="results"
               initial={{ opacity: 0, y: 20 }}

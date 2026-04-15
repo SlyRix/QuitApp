@@ -119,6 +119,7 @@ export type WsMessage =
   | WsMsgPlayerJoined
   | WsMsgPlayerDisconnected
   | WsMsgStartGame
+  | WsMsgNextQuestion
   | WsMsgQuestionStart
   | WsMsgAnswer
   | WsMsgAnswerAck
@@ -162,6 +163,10 @@ export interface WsMsgPlayerDisconnected {
 
 export interface WsMsgStartGame {
   type: "START_GAME";
+}
+
+export interface WsMsgNextQuestion {
+  type: "NEXT_QUESTION";
 }
 
 export interface WsMsgQuestionStart {

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Trash2, Check, ChevronLeft, Save, GripVertical, Clock, Star } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useApi } from "../hooks/useApi";
@@ -58,7 +57,6 @@ export default function QuizBuilder() {
   const [isPublic, setIsPublic] = useState(false);
   const [questions, setQuestions] = useState<DraftQuestion[]>([createBlankQuestion(0)]);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [saving, setSaving] = useState(false);
 
   // Load existing quiz if editing
   const { data: existingQuiz } = useQuery({

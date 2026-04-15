@@ -24,7 +24,6 @@ export default function JoinGame() {
   const [pin, setPin] = useState(urlPin ?? "");
   const [nickname, setNickname] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
   const [existingSession, setExistingSession] = useState<StoredSession | null>(null);
 
   // Check for existing session in localStorage
@@ -56,7 +55,6 @@ export default function JoinGame() {
   }
 
   async function handleAvatarConfirm(avatarConfig: AvatarConfig) {
-    setLoading(true);
     setError("");
 
     try {
@@ -104,8 +102,6 @@ export default function JoinGame() {
       navigate("/game", { state: session });
     } catch {
       setError(t("errors.networkError"));
-    } finally {
-      setLoading(false);
     }
   }
 

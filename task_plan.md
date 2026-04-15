@@ -40,22 +40,25 @@ Build a real-time multiplayer quiz platform that matches Kahoot feature-for-feat
 ## Phases
 
 ### Phase 1 — Foundation & Auth (Week 1)
-- [ ] 1.1 Project scaffold: React + Vite + TypeScript (Pages)
-- [ ] 1.2 Cloudflare Workers API project (Hono framework)
-- [ ] 1.3 D1 database schema: quiz creators (accounts), quizzes, questions, sessions, players (nickname-only)
-- [ ] 1.4 Auth system for quiz creators only: email/password + OAuth (Google)
-- [ ] 1.5 KV-based JWT session management (creators only)
-- [ ] 1.6 Basic creator dashboard UI
+- [x] 1.1 Project scaffold: React + Vite + TypeScript (Pages)
+- [x] 1.2 Cloudflare Workers API project (Hono framework)
+- [x] 1.3 D1 database schema: quiz creators (accounts), quizzes, questions, sessions, players (nickname-only)
+- [x] 1.4 Auth system for quiz creators only: email/password + OAuth (Google)
+- [x] 1.5 KV-based JWT session management (creators only)
+- [x] 1.6 Basic creator dashboard UI
 - [ ] 1.7 Host app domain: quiz.rushelwedsivani.com → Cloudflare Pages (creator/host UI)
 - [ ] 1.8 Player app domain: quiz-player.rushelwedsivani.com → separate Cloudflare Pages project (mobile-optimized)
 - [ ] 1.9 Workers API on api.quiz.rushelwedsivani.com (custom domain via Workers route)
-- [ ] 1.10 QR code generation: encodes https://quiz-player.rushelwedsivani.com/join/{PIN}
-- [ ] 1.11 GitHub repo: https://github.com/SlyRix/QuitApp.git → connect to Cloudflare Pages CI/CD
-- [ ] 1.12 i18n setup: react-i18next, EN + DE locale files from day one
-- [ ] 1.13 Quiz visibility: private (default) and public toggle per quiz
-- [ ] 1.14 Create D1 database: kahootplus-db (new, separate from existing wedding-db)
-- [ ] 1.15 Create KV namespace: KAHOOTPLUS_SESSIONS
-- [ ] 1.16 Create R2 bucket: kahootplus-media
+- [x] 1.10 QR code generation: encodes https://quiz-player.rushelwedsivani.com/join/{PIN}
+- [ ] 1.11 GitHub repo: https://github.com/SlyRix/QuitApp.git → connect to Cloudflare Pages CI/CD (needs GitHub auth)
+- [x] 1.12 i18n setup: react-i18next, EN + DE locale files from day one
+- [x] 1.13 Quiz visibility: private (default) and public toggle per quiz
+- [x] 1.14 Create D1 database: kahootplus-db (257c1f00-5331-45eb-aa0e-8529819b708f)
+- [x] 1.15 Create KV namespace: KAHOOTPLUS_SESSIONS (f108aa4c259d4706917d2d7c22fa6180)
+- [x] 1.16 Create R2 bucket: kahootplus-media
+- [x] 1.17 Apply D1 migration via MCP (all 8 tables + 10 indexes confirmed)
+- [x] 1.18 Deploy Worker: https://kahootplus-api.rushelsilvester.workers.dev
+- [x] 1.19 Add JWT_SECRET wrangler secret (random 64-char hex)
 
 ### Phase 2 — Quiz Creation Engine (Week 2)
 - [ ] 2.1 Quiz builder UI (drag-and-drop question ordering)
