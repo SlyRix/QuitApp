@@ -48,7 +48,7 @@ Build a real-time multiplayer quiz platform that matches Kahoot feature-for-feat
 - [x] 1.6 Basic creator dashboard UI
 - [x] 1.7 Host app LIVE: https://slyquiz-host.pages.dev
 - [x] 1.8 Player app LIVE: https://slyquiz-player.pages.dev
-- [ ] 1.9 Custom domains: quiz/quiz-player/api.quiz.rushelwedsivani.com (next step)
+- [x] 1.9 Custom domains configured: quiz / quiz-player / api.quiz.rushelwedsivani.com
 - [x] 1.10 QR code generation: encodes https://quiz-player.rushelwedsivani.com/join/{PIN}
 - [x] 1.11 GitHub repo pushed: https://github.com/SlyRix/QuitApp (CI/CD via dashboard when GitHub app connected)
 - [x] 1.12 i18n setup: react-i18next, EN + DE locale files from day one

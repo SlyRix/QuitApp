@@ -33,7 +33,10 @@ export function useGameSocket({
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) return;
 
     const protocol = window.location.protocol === "https:" ? "wss" : "ws";
-    const url = `${protocol}://${window.location.host}/api/games/${pin}/ws?sessionToken=${encodeURIComponent(sessionToken)}`;
+    const apiHost = import.meta.env.VITE_API_URL
+      ? new URL(import.meta.env.VITE_API_URL).host
+      : window.location.host;
+    const url = `${protocol}://${apiHost}/api/games/${pin}/ws?sessionToken=${encodeURIComponent(sessionToken)}`;
 
     const ws = new WebSocket(url);
     wsRef.current = ws;
