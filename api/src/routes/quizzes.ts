@@ -194,6 +194,15 @@ quizzesRouter.put("/:id", async (c) => {
     coverImage?: string;
     theme?: string;
     isPublic?: boolean;
+    questions?: Array<{
+      type: QuestionType;
+      text: string;
+      mediaUrl?: string;
+      timeLimit?: number;
+      points?: number;
+      orderIndex: number;
+      answers: Array<{ text: string; isCorrect: boolean; orderIndex: number }>;
+    }>;
   }>();
 
   await db
@@ -207,6 +216,46 @@ quizzesRouter.put("/:id", async (c) => {
       updatedAt: Date.now(),
     })
     .where(eq(quizzes.id, quizId));
+
+  // Replace questions if provided
+  if (body.questions !== undefined) {
+    // Delete all existing questions (cascade deletes answer_options via FK or we delete them too)
+    const existingQuestions = await db
+      .select({ id: questions.id })
+      .from(questions)
+      .where(eq(questions.quizId, quizId))
+      .all();
+
+    for (const q of existingQuestions) {
+      await db.delete(answerOptions).where(eq(answerOptions.questionId, q.id));
+    }
+    await db.delete(questions).where(eq(questions.quizId, quizId));
+
+    // Re-insert updated questions
+    for (const q of body.questions) {
+      const questionId = crypto.randomUUID();
+      await db.insert(questions).values({
+        id: questionId,
+        quizId,
+        type: q.type,
+        text: q.text,
+        mediaUrl: q.mediaUrl ?? null,
+        timeLimit: q.timeLimit ?? 20,
+        points: q.points ?? 1000,
+        orderIndex: q.orderIndex,
+      });
+
+      for (const a of q.answers) {
+        await db.insert(answerOptions).values({
+          id: crypto.randomUUID(),
+          questionId,
+          text: a.text,
+          isCorrect: a.isCorrect,
+          orderIndex: a.orderIndex,
+        });
+      }
+    }
+  }
 
   const updated = await db.select().from(quizzes).where(eq(quizzes.id, quizId)).get();
   return c.json({ success: true, data: updated });
