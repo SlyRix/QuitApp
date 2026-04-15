@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import AvatarBuilder, { configToString } from "./AvatarBuilder";
 import type { AvatarConfig } from "./AvatarBuilder";
+import { getApiBase } from "../hooks/useApi";
 
 const SESSION_KEY = "slyquiz_player_session";
 
@@ -58,7 +59,7 @@ export default function JoinGame() {
     setError("");
 
     try {
-      const res = await fetch(`/api/games/${pin}/join`, {
+      const res = await fetch(`${getApiBase()}/games/${pin}/join`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

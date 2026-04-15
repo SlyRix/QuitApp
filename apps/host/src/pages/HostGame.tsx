@@ -53,7 +53,11 @@ export default function HostGame() {
   // Connect WebSocket as host
   useEffect(() => {
     if (!pin) return;
-    const wsUrl = `${window.location.protocol === "https:" ? "wss" : "ws"}://${window.location.host}/api/games/${pin}/ws?isHost=true&token=${token}`;
+    const apiHost = import.meta.env.VITE_API_URL
+      ? new URL(import.meta.env.VITE_API_URL).host
+      : window.location.host;
+    const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws";
+    const wsUrl = `${wsProtocol}://${apiHost}/api/games/${pin}/ws?isHost=true&token=${token}`;
     const ws = new WebSocket(wsUrl);
     wsRef.current = ws;
 
