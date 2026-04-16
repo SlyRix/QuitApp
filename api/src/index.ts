@@ -23,6 +23,17 @@ app.route("/api/quizzes", quizzesRouter);
 app.route("/api/games", gamesRouter);
 app.route("/api/upload", uploadRouter);
 
+// ─── Media serving (R2 proxy) ─────────────────────────────────────────────────
+app.get("/api/media/:key{.+}", async (c) => {
+  const key = c.req.param("key");
+  const object = await c.env.MEDIA.get(key);
+  if (!object) return c.json({ success: false, error: "Not found" }, 404);
+  const headers = new Headers();
+  object.writeHttpMetadata(headers);
+  headers.set("Cache-Control", "public, max-age=31536000, immutable");
+  return new Response(object.body, { headers });
+});
+
 // ─── 404 fallback ─────────────────────────────────────────────────────────────
 app.notFound((c) => c.json({ success: false, error: "Not found" }, 404));
 app.onError((err, c) => {

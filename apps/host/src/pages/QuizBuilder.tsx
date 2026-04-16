@@ -392,17 +392,38 @@ function AnswerEditor({
             </div>
           ))}
         </div>
-        <div className="bg-surface-2 rounded-xl p-3">
-          <input
-            type="range"
-            min={min} max={max} value={correct}
-            onChange={(e) => onUpdateQuestion({ sliderCorrect: Number(e.target.value) })}
-            className="w-full accent-accent"
-          />
-          <div className="flex justify-between text-xs text-text-muted mt-1">
-            <span>{min}</span>
-            <span className="text-accent font-bold">{correct}</span>
-            <span>{max}</span>
+        <div className="bg-surface-2 rounded-xl p-4 space-y-3">
+          <div className="relative h-6 flex items-center">
+            {/* Track background */}
+            <div className="absolute left-0 right-0 h-2 rounded-full bg-surface-3" />
+            {/* Track fill */}
+            <div
+              className="absolute left-0 h-2 rounded-full"
+              style={{
+                width: `${max === min ? 0 : ((correct - min) / (max - min)) * 100}%`,
+                background: "#b8ff35",
+              }}
+            />
+            {/* Native range (invisible but functional) */}
+            <input
+              type="range"
+              min={min} max={max} value={correct}
+              onChange={(e) => onUpdateQuestion({ sliderCorrect: Number(e.target.value) })}
+              className="absolute left-0 right-0 w-full opacity-0 h-6 cursor-pointer"
+            />
+            {/* Custom thumb */}
+            <div
+              className="absolute w-5 h-5 rounded-full border-2 border-background shadow-lg pointer-events-none"
+              style={{
+                left: `calc(${max === min ? 0 : ((correct - min) / (max - min)) * 100}% - 10px)`,
+                background: "#b8ff35",
+              }}
+            />
+          </div>
+          <div className="flex justify-between text-xs">
+            <span className="text-text-muted">{min}</span>
+            <span className="font-bold text-sm" style={{ color: "#b8ff35" }}>{correct}</span>
+            <span className="text-text-muted">{max}</span>
           </div>
         </div>
       </div>

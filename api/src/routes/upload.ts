@@ -41,7 +41,7 @@ uploadRouter.post("/", async (c) => {
     customMetadata: { uploadedBy: user.userId, originalName: fileObj.name },
   });
 
-  const publicUrl = `https://pub-kahootplus-media.r2.dev/${key}`;
+  const publicUrl = `https://api.quiz.rushelwedsivani.com/api/media/${key}`;
 
   return c.json({ success: true, data: { url: publicUrl, key } }, 201);
 });

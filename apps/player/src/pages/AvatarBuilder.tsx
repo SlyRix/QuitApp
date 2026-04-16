@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shuffle, Check } from "lucide-react";
+import { Shuffle, Check, Camera, X } from "lucide-react";
 
 export interface AvatarConfig {
   body: number;
@@ -9,6 +9,7 @@ export interface AvatarConfig {
   outfit: number;
   accessory: number;
   color: string;
+  photo?: string; // base64 data URL if user uploaded a photo
 }
 
 const SKIN_COLORS = ["#fddbb4", "#f1c27d", "#c68642", "#8d5524", "#4a2c17"];
@@ -38,6 +39,19 @@ export function configToString(config: AvatarConfig): string {
 }
 
 export function AvatarSVG({ config, size = 80 }: { config: AvatarConfig; size?: number }) {
+  // If user uploaded a photo, render it as a circular image
+  if (config.photo) {
+    return (
+      <svg width={size} height={size} viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="circle-clip">
+            <circle cx="50" cy="50" r="50" />
+          </clipPath>
+        </defs>
+        <image href={config.photo} x="0" y="0" width="100" height="100" clipPath="url(#circle-clip)" preserveAspectRatio="xMidYMid slice" />
+      </svg>
+    );
+  }
   const skinColor = SKIN_COLORS[config.skin] ?? SKIN_COLORS[0]!;
   const hairColors = ["#1a0a00", "#6b3a2a", "#d4a017", "#e03030", "#607080"];
   const hairColor = hairColors[config.hair] ?? hairColors[0]!;
@@ -96,17 +110,47 @@ interface AvatarBuilderProps {
   nickname?: string;
 }
 
-type Panel = "color" | "skin" | "hair" | "outfit" | "extra";
+type Panel = "color" | "skin" | "hair" | "outfit" | "extra" | "photo";
 
 export default function AvatarBuilder({ onConfirm, nickname }: AvatarBuilderProps) {
   const [config, setConfig] = useState<AvatarConfig>(randomConfig);
   const [activePanel, setActivePanel] = useState<Panel>("color");
+  const photoInputRef = useRef<HTMLInputElement>(null);
 
   function update(key: keyof AvatarConfig, value: number | string) {
     setConfig((prev) => ({ ...prev, [key]: value }));
   }
 
+  function handlePhotoUpload(file: File) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target?.result as string;
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = 200;
+        canvas.height = 200;
+        const ctx = canvas.getContext("2d")!;
+        // Circle clip
+        ctx.beginPath();
+        ctx.arc(100, 100, 100, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.clip();
+        // Draw image centered/cropped
+        const size = Math.min(img.width, img.height);
+        const sx = (img.width - size) / 2;
+        const sy = (img.height - size) / 2;
+        ctx.drawImage(img, sx, sy, size, size, 0, 0, 200, 200);
+        const compressed = canvas.toDataURL("image/jpeg", 0.75);
+        setConfig((prev) => ({ ...prev, photo: compressed }));
+      };
+      img.src = dataUrl;
+    };
+    reader.readAsDataURL(file);
+  }
+
   const panels: { key: Panel; label: string; emoji: string }[] = [
+    { key: "photo",  label: "Photo", emoji: "📷" },
     { key: "color", label: "BG", emoji: "🎨" },
     { key: "skin",  label: "Skin", emoji: "✋" },
     { key: "hair",  label: "Hair", emoji: "💇" },
@@ -167,6 +211,52 @@ export default function AvatarBuilder({ onConfirm, nickname }: AvatarBuilderProp
             transition={{ duration: 0.18 }}
             className="pb-2"
           >
+            {activePanel === "photo" && (
+              <div className="flex flex-col items-center gap-4 py-2">
+                {config.photo ? (
+                  <>
+                    <div className="relative">
+                      <img src={config.photo} alt="Your photo" className="w-24 h-24 rounded-full object-cover border-2 border-accent" />
+                      <button
+                        onClick={() => setConfig((prev) => ({ ...prev, photo: undefined }))}
+                        className="absolute -top-1 -right-1 w-6 h-6 bg-surface-3 border border-white/20 rounded-full flex items-center justify-center"
+                      >
+                        <X size={12} className="text-text-secondary" />
+                      </button>
+                    </div>
+                    <p className="text-xs text-text-muted text-center">Looking good!</p>
+                    <button
+                      onClick={() => photoInputRef.current?.click()}
+                      className="text-xs text-accent underline"
+                    >
+                      Change photo
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => photoInputRef.current?.click()}
+                      className="w-24 h-24 rounded-full border-2 border-dashed border-white/20 flex flex-col items-center justify-center gap-1 text-text-muted hover:border-accent/50 hover:text-accent transition-colors active:scale-95"
+                    >
+                      <Camera size={24} />
+                      <span className="text-xs font-medium">Upload</span>
+                    </button>
+                    <p className="text-xs text-text-muted text-center px-4">
+                      Use your own photo as avatar.<br />It will be cropped to a circle.
+                    </p>
+                  </>
+                )}
+                <input
+                  ref={photoInputRef}
+                  type="file"
+                  accept="image/*"
+                  capture="user"
+                  className="hidden"
+                  onChange={(e) => { const f = e.target.files?.[0]; if (f) handlePhotoUpload(f); }}
+                />
+              </div>
+            )}
+
             {activePanel === "color" && (
               <div className="grid grid-cols-4 gap-3">
                 {BG_COLORS.map((color) => (
