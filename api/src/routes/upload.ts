@@ -16,28 +16,29 @@ uploadRouter.post("/", async (c) => {
   const formData = await c.req.formData();
   const file = formData.get("file");
 
-  if (!file || !(file instanceof File)) {
+  if (!file || typeof file !== "object" || !("arrayBuffer" in file)) {
     return c.json({ success: false, error: "No file provided" }, 400);
   }
+  const fileObj = file as File;
 
-  if (!ALLOWED_TYPES.includes(file.type)) {
+  if (!ALLOWED_TYPES.includes(fileObj.type)) {
     return c.json(
       { success: false, error: `Unsupported file type. Allowed: ${ALLOWED_TYPES.join(", ")}` },
       415
     );
   }
 
-  const buffer = await file.arrayBuffer();
+  const buffer = await fileObj.arrayBuffer();
   if (buffer.byteLength > MAX_FILE_SIZE) {
     return c.json({ success: false, error: "File exceeds 10 MB limit" }, 413);
   }
 
-  const ext = file.type.split("/")[1] ?? "bin";
+  const ext = fileObj.type.split("/")[1] ?? "bin";
   const key = `uploads/${user.userId}/${crypto.randomUUID()}.${ext}`;
 
   await c.env.MEDIA.put(key, buffer, {
-    httpMetadata: { contentType: file.type },
-    customMetadata: { uploadedBy: user.userId, originalName: file.name },
+    httpMetadata: { contentType: fileObj.type },
+    customMetadata: { uploadedBy: user.userId, originalName: fileObj.name },
   });
 
   const publicUrl = `https://pub-kahootplus-media.r2.dev/${key}`;

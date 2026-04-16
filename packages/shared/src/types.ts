@@ -213,6 +213,7 @@ export interface WsMsgSync {
   type: "SYNC";
   phase: GamePhase;
   currentQuestionIndex: number;
+  totalQuestions: number;
   timeRemainingMs: number;
   myScore: number;
   myStreak: number;

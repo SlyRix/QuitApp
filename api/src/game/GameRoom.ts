@@ -355,28 +355,31 @@ export class GameRoom {
           ? Math.max(0, currentQuestion.timeLimit * 1000 - (Date.now() - this.gameState.questionStartedAt))
           : 0;
 
-      const syncMsg: WsMessage = {
-        type: "SYNC",
+      const syncBase = {
+        type: "SYNC" as const,
         phase: this.gameState.phase,
         currentQuestionIndex: this.gameState.currentQuestionIndex,
+        totalQuestions: this.gameState.questions.length,
         timeRemainingMs,
         myScore: existing.score,
         myStreak: existing.streak,
         hasAnswered: existing.hasAnswered,
         leaderboard: this.buildLeaderboard(),
-        currentQuestion:
-          this.gameState.phase === "question" && currentQuestion
-            ? {
-                id: currentQuestion.id,
-                type: currentQuestion.type,
-                text: currentQuestion.text,
-                mediaUrl: currentQuestion.mediaUrl,
-                timeLimit: currentQuestion.timeLimit,
-                points: currentQuestion.points,
-                answers: currentQuestion.answers.map((a) => ({ id: a.id, text: a.text })),
-              }
-            : undefined,
       };
+      const syncMsg: WsMessage = this.gameState.phase === "question" && currentQuestion
+        ? {
+            ...syncBase,
+            currentQuestion: {
+              id: currentQuestion.id,
+              type: currentQuestion.type,
+              text: currentQuestion.text,
+              mediaUrl: currentQuestion.mediaUrl,
+              timeLimit: currentQuestion.timeLimit,
+              points: currentQuestion.points,
+              answers: currentQuestion.answers.map((a) => ({ id: a.id, text: a.text })),
+            },
+          }
+        : syncBase;
       ws.send(JSON.stringify(syncMsg));
 
       this.broadcast({ type: "PLAYER_JOINED", playerId: row.id, nickname: row.nickname, avatarData: row.avatar_data, totalPlayers: this.players.size }, row.id);
@@ -423,8 +426,11 @@ export class GameRoom {
         p.ws = null;
       }
       this.broadcast({ type: "PLAYER_DISCONNECTED", playerId: row.id, nickname: row.nickname });
-      // Set alarm for 60s cleanup
-      await this.state.storage.setAlarm(Date.now() + 60_000);
+      // Only set cleanup alarm when NOT in an active question — otherwise we'd
+      // overwrite the question timer alarm and the question would never auto-end.
+      if (this.gameState.phase !== "question") {
+        await this.state.storage.setAlarm(Date.now() + 60_000);
+      }
       await this.persistState();
     });
   }

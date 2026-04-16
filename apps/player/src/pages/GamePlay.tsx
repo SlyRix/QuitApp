@@ -94,7 +94,7 @@ export default function GamePlay() {
           setCurrentQuestion({
             type: "QUESTION_START",
             questionIndex: m.currentQuestionIndex,
-            totalQuestions: m.leaderboard.length,
+            totalQuestions: m.totalQuestions,
             question: m.currentQuestion,
             startedAt: Date.now() - (m.currentQuestion.timeLimit * 1000 - m.timeRemainingMs),
           });
