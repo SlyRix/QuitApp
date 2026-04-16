@@ -44,6 +44,40 @@
 
 ---
 
+## Session 3 — 2026-04-16
+
+### Completed
+- [x] Pushed main branch to GitHub (was blocked, used stored token from .env)
+- [x] Phase 2: Quiz Builder — full rewrite with:
+  - Drag-and-drop question reordering via @dnd-kit/sortable
+  - Type Answer question type (free text, correct answer stored)
+  - Slider question type (min/max/correct with live range preview)
+  - Question type dropdown with icons + descriptions (replaces flat buttons)
+  - Media image upload per question → R2 with preview + clear button
+  - Kahoot import modal (paste JSON or upload .json file)
+  - useApi.upload() method added for multipart/form-data
+- [x] Fixed Kahoot import redirect route (/quiz/:id → /quizzes/:id/edit)
+- [x] API redeployed: slyquiz-api version 99052ccb
+
+### Phase Status After Session 3
+- Phase 1: ✅ Complete
+- Phase 2: ✅ Mostly complete (2.1–2.5, 2.7, 2.10, 2.13 done; Puzzle/WordCloud/ImageMap deferred)
+- Phase 3: ✅ Game engine built (GameRoom DO fully implemented, host + player game views done)
+- Phase 4 (partial): Player join flow, avatar builder, gameplay screen all built
+
+### What's Left Before First Playtest
+1. Deploy host app to Cloudflare Pages
+2. Deploy player app to Cloudflare Pages
+3. Connect custom domains
+4. End-to-end test: create quiz → host game → join as player → full game loop
+
+### Next Steps
+- Deploy both Pages apps (CI/CD via CF dashboard or wrangler pages deploy)
+- Test the full game loop end-to-end
+- Then move to Phase 4: avatar polish, streak bonuses, sound effects
+
+---
+
 ### Session 1 — What Was Done
 - Created project structure and 3 planning files
 - Audited all Kahoot features to match (P0/P1/P2 prioritized)

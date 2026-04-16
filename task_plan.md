@@ -61,19 +61,19 @@ Build a real-time multiplayer quiz platform that matches Kahoot feature-for-feat
 - [x] 1.19 Add JWT_SECRET wrangler secret (random 64-char hex)
 
 ### Phase 2 — Quiz Creation Engine (Week 2)
-- [ ] 2.1 Quiz builder UI (drag-and-drop question ordering)
-- [ ] 2.2 Question type: Multiple Choice (4 options)
-- [ ] 2.3 Question type: True / False
-- [ ] 2.4 Question type: Type Answer (free text)
-- [ ] 2.5 Question type: Poll (no correct answer)
+- [x] 2.1 Quiz builder UI (drag-and-drop question ordering)
+- [x] 2.2 Question type: Multiple Choice (4 options)
+- [x] 2.3 Question type: True / False
+- [x] 2.4 Question type: Type Answer (free text)
+- [x] 2.5 Question type: Poll (no correct answer)
 - [ ] 2.6 Question type: Puzzle (order items)
-- [ ] 2.7 Question type: Slider (numeric range)
+- [x] 2.7 Question type: Slider (numeric range)
 - [ ] 2.8 Question type: Word Cloud
 - [ ] 2.9 Question type: Image Map (click on image)
-- [ ] 2.10 Media upload per question (image/audio/video → R2)
-- [ ] 2.11 Quiz settings: time limits, points, theme, music
+- [x] 2.10 Media upload per question (image → R2)
+- [ ] 2.11 Quiz settings: theme, music
 - [ ] 2.12 Question bank / search and reuse
-- [ ] 2.13 Kahoot quiz import: upload Kahoot JSON export → auto-convert to SlyQuiz format
+- [x] 2.13 Kahoot quiz import: upload Kahoot JSON export → auto-convert to SlyQuiz format
 - [ ] 2.14 Import validation: detect unsupported question types, show mapping preview before confirming
 - [ ] 2.15 Preserve imported media: download Kahoot-hosted images → re-upload to R2
 
