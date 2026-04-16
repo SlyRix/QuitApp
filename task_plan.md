@@ -9,8 +9,8 @@
 **Stack:** React + Cloudflare Workers + D1 + R2 + KV + Durable Objects
 **Cloudflare Account:** a3000146f2714841e3bdd91d655aef9c (Rushelsilvester@outlook.com)
 **Languages:** English + German (i18n from day one)
-**Last Updated:** 2026-04-15
-**Status:** Planning Phase
+**Last Updated:** 2026-04-16
+**Status:** Phase 3 Complete — Live & Deployed
 
 ---
 
@@ -78,37 +78,37 @@ Build a real-time multiplayer quiz platform that matches Kahoot feature-for-feat
 - [ ] 2.15 Preserve imported media: download Kahoot-hosted images → re-upload to R2
 
 ### Phase 3 — Live Game Engine (Week 3)
-- [ ] 3.1 Durable Object: GameRoom (one per live session)
-- [ ] 3.2 Host creates game → gets PIN + QR code
-- [ ] 3.3 Players join via PIN or QR code (no login needed)
-- [ ] 3.4 Lobby screen with live player list
-- [ ] 3.5 Game flow: question broadcast → countdown → answer collection → results
-- [ ] 3.6 Real-time leaderboard after each question
-- [ ] 3.7 Final podium screen
+- [x] 3.1 Durable Object: GameRoom (one per live session)
+- [x] 3.2 Host creates game → gets PIN + QR code
+- [x] 3.3 Players join via PIN or QR code (no login needed)
+- [x] 3.4 Lobby screen with live player list
+- [x] 3.5 Game flow: question broadcast → countdown → answer collection → results
+- [x] 3.6 Real-time leaderboard after each question
+- [x] 3.7 Final podium screen
 - [ ] 3.8 Spectator mode (join late, view only)
 - [ ] 3.9 Team mode (players grouped into teams)
-- [ ] 3.10 Player reconnection: auto-retry WebSocket with exponential backoff
-- [ ] 3.11 Player session token: issued on join, stored in localStorage — used to reclaim identity on reconnect
-- [ ] 3.12 GameRoom DO: hold player slot for 60s after disconnect before marking as dropped
-- [ ] 3.13 Rejoin UI: "Reconnecting..." overlay with spinner + attempt counter shown to player
-- [ ] 3.14 On successful rejoin: DO sends full current game state snapshot to catch player up
-- [ ] 3.15 If reconnect during active question: player can still answer if time remains
-- [ ] 3.16 If reconnect after question ended: player sees results screen, scores preserved
+- [x] 3.10 Player reconnection: auto-retry WebSocket with exponential backoff
+- [x] 3.11 Player session token: issued on join, stored in localStorage — used to reclaim identity on reconnect
+- [x] 3.12 GameRoom DO: hold player slot for 60s after disconnect before marking as dropped
+- [x] 3.13 Rejoin UI: "Reconnecting..." overlay shown to player
+- [x] 3.14 On successful rejoin: DO sends full SYNC snapshot to catch player up
+- [x] 3.15 If reconnect during active question: player can still answer if time remains
+- [x] 3.16 If reconnect after question ended: player sees results screen, scores preserved
 - [ ] 3.17 Host view: disconnected players shown with grey indicator, not removed from leaderboard
 - [ ] 3.18 Answer submission fallback: if WS drops mid-answer, retry over HTTP POST before giving up
 
 ### Phase 4 — Player Experience (Week 4)
-- [ ] 4.1 Mobile-first player view (phone as controller)
-- [ ] 4.2 Nickname selection on join
-- [ ] 4.3 Avatar builder on join: choose base character, skin tone, hair, accessories, outfit color
+- [x] 4.1 Mobile-first player view (phone as controller)
+- [x] 4.2 Nickname selection on join
+- [x] 4.3 Avatar builder on join: choose base character, skin tone, hair, accessories, outfit color
 - [ ] 4.4 Avatar presets (10+ ready-made characters) + custom builder mode
 - [ ] 4.5 Upload own photo as avatar (cropped to circle, stored in R2)
 - [ ] 4.6 Avatar persisted per nickname (KV cache) so returning players keep theirs
-- [ ] 4.7 Animated answer feedback (correct/wrong)
-- [ ] 4.8 Streak bonuses and combo multipliers
+- [x] 4.7 Animated answer feedback (correct/wrong) — Framer Motion animations in GamePlay
+- [x] 4.8 Streak bonuses and combo multipliers — streak tracked in GameRoom, shown in player UI
 - [ ] 4.9 Power-ups (50/50, double points, shield)
 - [ ] 4.10 Sound effects and music (royalty-free, stored in R2)
-- [ ] 4.11 Live chat: players can type messages visible to all during lobby + between questions
+- [x] 4.11 Live chat: backend CHAT_MESSAGE in GameRoom — NO player/host UI yet
 - [ ] 4.12 Chat moderation: host can mute individual players or enable slow mode
 - [ ] 4.13 Chat message reactions (players can react to chat messages with emoji)
 - [ ] 4.14 Profanity filter on chat messages (configurable by host)

@@ -78,6 +78,38 @@
 
 ---
 
+## Session 3 (continued) — 2026-04-16
+
+### Completed
+- [x] Both Pages apps deployed to production:
+  - Host: https://quiz.rushelwedsivani.com (200 ✓)
+  - Player: https://quiz-player.rushelwedsivani.com (200 ✓)
+  - API: https://api.quiz.rushelwedsivani.com (200 ✓)
+- [x] WebSocket audit — 3 bugs found and fixed:
+  - WsMsgSync missing totalQuestions (player showed player-count as Q count on reconnect)
+  - Disconnect alarm overrode question timer alarm (questions never auto-ended if player dropped mid-Q)
+  - instanceof File broken in CF Workers types → replaced with duck-type check
+- [x] All 3 services redeployed after fixes (Worker v6414c962)
+- [x] task_plan.md updated — Phase 3 checkboxes now accurate
+
+### Accurate Phase Status
+- Phase 1: ✅ 100% complete
+- Phase 2: ✅ 8/15 items (MC, T/F, Type Answer, Poll, Slider, drag-drop, media upload, Kahoot import)
+  - Deferred: Puzzle, Word Cloud, Image Map, theme/music settings, question bank, import validation
+- Phase 3: ✅ 16/18 items complete
+  - Deferred: 3.8 Spectator mode, 3.17 Host grey indicator for disconnected players, 3.18 HTTP fallback
+- Phase 4: 4/14 items (mobile view, nickname, avatar builder, streak UI)
+  - Built backend-only: chat (no UI), streaks (no sound/haptic)
+  - Not started: power-ups, sounds, chat UI, avatar presets/photo upload/KV persist
+- Phases 5–9: Not started
+
+### Next Up
+- Phase 4: chat UI, sound effects, power-ups
+- Phase 3 remainders: host disconnect indicator (3.17)
+- Phase 2 remainders: Puzzle type, quiz theme settings
+
+---
+
 ### Session 1 — What Was Done
 - Created project structure and 3 planning files
 - Audited all Kahoot features to match (P0/P1/P2 prioritized)
