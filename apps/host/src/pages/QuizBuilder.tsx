@@ -605,7 +605,7 @@ export default function QuizBuilder() {
       const parsed = JSON.parse(json);
       const result = await api.post<Quiz>("/quizzes/import", parsed);
       setShowImport(false);
-      navigate(`/quiz/${result.id}`);
+      navigate(`/quizzes/${result.id}/edit`);
     } catch (err) {
       console.error("Import failed", err);
     }
